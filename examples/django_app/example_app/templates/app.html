@@ -5,6 +5,7 @@
     <title>Django ChatterBot Example</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
 
@@ -21,7 +22,7 @@
         <hr class="my-2">
 
         <div class="row">
-          <div class="col-xs-6 offset-xs-3">
+          <div class="col-lg-6">
             <ul class="list-group chat-log js-chat-log">
             </ul>
 
@@ -31,7 +32,7 @@
                 <button class="btn btn-primary js-say">Submit</button>
               </span>
             </div>
-            
+
           </div>
         </div>
 
@@ -65,8 +66,9 @@
 
       function createRow(text) {
         var $row = $('<li class="list-group-item"></li>');
-
         $row.text(text);
+        $row.append('<span id="menu" class="glyphicon glyphicon-option-horizontal" style="float:right;"></span>');
+        //$row.append('<div class="pull-right"><span class = "glyphicon glyphicon-star"></span></div>');
         $chatlog.append($row);
       }
 
@@ -110,6 +112,11 @@
           submitInput();
         }
       });
+
+      $(document).on('click', '#menu', function() {
+        alert("Clicked" + '#menu'.innerHTML);
+      });
+
     </script>
   </body>
 </html>
