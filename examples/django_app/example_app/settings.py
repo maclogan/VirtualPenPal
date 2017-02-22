@@ -13,7 +13,7 @@ SECRET_KEY = 'fsch+6!=q+@ol&%0x!nwdl@48^ixbd4clx5f1i!5n^66y+pmn*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mlogan2.pythonanywhere.com']
 
 
 # Application definition
@@ -101,9 +101,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 STATICFILES_DIRS = (
-    os.path.join(
-        os.path.dirname(__file__),
-        'static',
-    ),
+    #os.path.join(
+     #   os.path.dirname(__file__),
+     #   'static',
+    #),
+    os.path.join(BASE_DIR, 'example_app/static'),
 )
