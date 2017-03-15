@@ -15,7 +15,6 @@
 
       <div class="jumbotron mt-1">
         <h1 class="jumbotron-heading text-xs-center">VirtualPenPal Demo</h1>
-        <div id="translation">Test Div</div>
         <hr class="my-2">
 
         <div class="row">
@@ -110,6 +109,10 @@
         }
       });
 
+
+      var clicked;
+      var messages = document.getElementById("chat").getElementsByTagName("li");
+
       function translate(input) {
         var text = input;
         var key = "AIzaSyANRQ_kj-1vxJjNtxhqmhBnw055tg_3heY";
@@ -126,16 +129,19 @@
 
       function showIt(response) {
         if(response.data)
-          document.getElementById("translation").innerHTML += "<br>" + response.data.translations[0].translatedText;
+          //document.getElementById("translation").innerHTML
+          messages[clicked].innerHTML += "<br>" + response.data.translations[0].translatedText;
+          //clicked.html() += "<br>" + response.data.translations[0].translatedText;
           else {
             alert("Error:" + response.error.message)
           }
       }
 
-
       $(document).on('click', '#chat li', function() {
         //alert("Clicked" + $(this).html());
-        translate($(this).html());
+        clicked = $(this).index();
+        alert(clicked);
+        translate($(this).html())
       });
 
     </script>
