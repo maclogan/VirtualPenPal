@@ -15,12 +15,12 @@
 
       <div class="jumbotron mt-1">
         <h1 class="jumbotron-heading text-xs-center">VirtualPenPal Demo</h1>
-
+        <div id="translation">Test Div</div>
         <hr class="my-2">
 
         <div class="row">
           <div class="col-lg-6">
-            <ul class="list-group chat-log js-chat-log">
+            <ul class="list-group chat-log js-chat-log" id="chat">
             </ul>
 
             <div class="input-group input-group-lg mt-1">
@@ -64,7 +64,7 @@
       function createRow(text) {
         var $row = $('<li class="list-group-item"></li>');
         $row.text(text);
-        $row.append('<span id="menu" class="glyphicon glyphicon-option-horizontal" style="float:right;"></span>');
+        //$row.append('<span id="menu" class="glyphicon glyphicon-option-horizontal" style="float:right;"></span>');
         //$row.append('<div class="pull-right"><span class = "glyphicon glyphicon-star"></span></div>');
         $chatlog.append($row);
       }
@@ -110,8 +110,32 @@
         }
       });
 
-      $(document).on('click', '#menu', function() {
-        alert("Clicked" + '#menu'.innerHTML);
+      function translate(input) {
+        var text = input;
+        var key = "AIzaSyANRQ_kj-1vxJjNtxhqmhBnw055tg_3heY";
+        var source = "en";
+        var dest = "zh-CN";
+
+        var url = 'https://www.googleapis.com/language/translate/v2?';
+         url += 'key='+key+'&source='+source+'&target='+dest+'&callback=showIt&q='+text;
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = url;
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      function showIt(response) {
+        if(response.data)
+          document.getElementById("translation").innerHTML += "<br>" + response.data.translations[0].translatedText;
+          else {
+            alert("Error:" + response.error.message)
+          }
+      }
+
+
+      $(document).on('click', '#chat li', function() {
+        //alert("Clicked" + $(this).html());
+        translate($(this).html());
       });
 
     </script>
