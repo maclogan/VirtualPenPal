@@ -6,12 +6,46 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      ul.optionsMenu{
+        list-style:none;
+        margin:0;padding:0;
+        position: absolute;
+        color: #333;
+        box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.2);
+        z-index: 999;
+      }
+
+      ul.optionsMenu *{
+          transition:color .4s, background .4s;
+      }
+
+      ul.optionsMenu li{
+        min-width:150px;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 12px 15px;
+        background-color: #fff;
+        border-bottom:1px solid #ecf0f1;
+      }
+
+      ul.optionsMenu li a{
+        color:#333;
+        text-decoration:none;
+      }
+    </style>
+
   </head>
   <body>
 
     {% include 'nav.html' %}
 
     <div class="container">
+
+      <ul class="optionsMenu" style="display:none;">
+        <li id="translateBtn">Translate</li>
+        <li id="saveBtn">Save to Notes</li>
+      </ul>
 
       <div class="jumbotron mt-1">
         <h1 class="jumbotron-heading text-xs-center">VirtualPenPal Demo</h1>
@@ -22,7 +56,7 @@
             <ul class="list-group chat-log js-chat-log" id="chat">
             </ul>
 
-            <div class="input-group input-group-lg mt-1">
+            <div style="z-index = -1;"  class="input-group input-group-lg mt-1">
               <input type="text" class="form-control js-text" placeholder="Type something to begin..."/>
               <span class="input-group-btn">
                 <button class="btn btn-primary js-say">Submit</button>
@@ -63,8 +97,8 @@
       function createRow(text) {
         var $row = $('<li class="list-group-item"></li>');
         $row.text(text);
-        //$row.append('<span id="menu" class="glyphicon glyphicon-option-horizontal" style="float:right;"></span>');
-        //$row.append('<div class="pull-right"><span class = "glyphicon glyphicon-star"></span></div>');
+        //row.append('<span id="menu" class="glyphicon glyphicon-option-horizontal" style="float:right;"></span>');
+        //$row.append('<div class="pull-right">Hi</div>');
         $chatlog.append($row);
       }
 
@@ -109,8 +143,10 @@
         }
       });
 
+      var translated =[];
 
       var clicked;
+      var clickedIndex
       var messages = document.getElementById("chat").getElementsByTagName("li");
 
       function translate(input) {
@@ -130,20 +166,51 @@
       function showIt(response) {
         if(response.data)
           //document.getElementById("translation").innerHTML
-          messages[clicked].innerHTML += "<br>" + response.data.translations[0].translatedText;
+          messages[clickedIndex].innerHTML += "<br>" + response.data.translations[0].translatedText;
           //clicked.html() += "<br>" + response.data.translations[0].translatedText;
           else {
             alert("Error:" + response.error.message)
           }
       }
 
-      $(document).on('click', '#chat li', function() {
+      $(document).on('click', '#chat li', function(event) {
         //alert("Clicked" + $(this).html());
-        clicked = $(this).index();
+        clicked = $(this);
+        clickedIndex = $(this).index();
+
+        event.preventDefault();
+           $("ul.optionsMenu")
+               .toggle()
+               .css({top: event.pageY + 15, left: event.pageX + 10});
+
+        if(translated[clickedIndex] !== true) {
+          $('#translateBtn').show();
+        }
+        else {
+          $('#translateBtn').hide();
+        }
         //alert(clicked);
-        translate($(this).html())
+        //translate($(this).html())
       });
 
+      $('#translateBtn').click(function() {
+        if(translated[clickedIndex] !== true){
+          translated[clickedIndex] = true;
+          translate(clicked.html());
+        }
+        else {
+          alert("This phrase is already translated.")
+        }
+      });
+
+      $('#saveBtn').click(function() {
+        if (clicked.html() == null){
+          alert("cannot be saved");
+        }
+        else {
+          SavedText(user=request.user, text="clicked.html()").save();
+        }
+      });
     </script>
   </body>
 </html>
