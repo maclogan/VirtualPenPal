@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>VirtualPenPal Saved Texts</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+  <h1>Template is working</h1>
+  <div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Time Created</th>
+        <th>User</th>
+        <th>Text</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for obj in objectList %}
+        <td>{{obj.created_at}}</td>
+        <td>{{obj.text}}</td>
+        <td>{{obj.user}}</td>
+        <td><a>Delete</a></td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

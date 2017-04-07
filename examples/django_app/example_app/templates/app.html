@@ -52,7 +52,7 @@
         <hr class="my-2">
 
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-12">
             <ul class="list-group chat-log js-chat-log" id="chat">
             </ul>
 
@@ -181,7 +181,14 @@
         event.preventDefault();
            $("ul.optionsMenu")
                .toggle()
-               .css({top: event.pageY + 15, left: event.pageX + 10});
+               .css({top: event.pageY, left: event.pageX + 10});
+
+        if($("ul.optionsMenu").is(":visible")) {
+          $(messages[clickedIndex]).addClass("active");
+        }
+        else {
+          $(messages).removeClass("active");
+        }
 
         if(translated[clickedIndex] !== true) {
           $('#translateBtn').show();
@@ -201,6 +208,8 @@
         else {
           alert("This phrase is already translated.")
         }
+        $('ul.optionsMenu').hide();
+        $(messages[clickedIndex]).removeClass("active");
       });
 
       $('#saveBtn').click(function() {
@@ -210,6 +219,8 @@
         else {
           SavedText(user=request.user, text="clicked.html()").save();
         }
+        $(messages[clickedIndex]).removeClass("active");
+
       });
     </script>
   </body>

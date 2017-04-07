@@ -1,13 +1,26 @@
 {% load staticfiles %}
 
-<nav class="navbar navbar-dark bg-inverse navbar-full">
-
+<nav class="navbar navbar-inverse navbar-full">
   <ul class="nav navbar-nav float-xs-right">
-    <li>
-      <a class="nav-link" href="/register">Register</a>
+    {% if user.is_authenticated %}
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.username }}</a>
+      <ul class="dropdown-menu">
+        <li><a>Saved Notes</a></li>
+        <li><a>Edit User</a></li>
+        <li><a>Logout</a></li>
+      </ul>
     </li>
+    {% else %}
+    <li>
+      <a href="/register">Register</a>
+    </li>
+    <li>
+      <a href="/login">Login</a>
+    </li>
+    {% endif%}
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'admin:index' %}">Django Admin</a>
+      <a href="{% url 'admin:index' %}">Django Admin</a>
     </li>
   </ul>
 </nav>

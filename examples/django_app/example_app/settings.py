@@ -28,8 +28,7 @@ INSTALLED_APPS = (
 
     'chatterbot.ext.django_chatterbot',
     'example_app',
-
-    'django.contrib.sites',
+    'saved_posts',
 )
 
 # ChatterBot settings

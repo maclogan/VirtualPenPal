@@ -1,6 +1,11 @@
 from django.views.generic.base import TemplateView
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import (
+    authenticate,
+    login,
+    logout,
+    get_user_model
+    )
 from django.views import generic
 from django.views.generic import View
 from .forms import UserForm
