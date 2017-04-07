@@ -17,3 +17,7 @@ class ConversationFactory(DjangoModelFactory):
 
     class Meta:
         model = 'chatterbot.ext.django_chatterbot.Conversation'
+
+class SavedTextFactory(DjangoModelFactory):
+    class Meta:
+        model = 'chatterbot.ext.django_chatterbot.SavedText'
