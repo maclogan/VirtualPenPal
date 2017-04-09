@@ -232,16 +232,10 @@
         $(messages[clickedIndex]).removeClass("active");
       });
 
-      $('#saveBtn').click(function() {
-        if (clicked.html() == null){
-          alert("cannot be saved");
-        }
-        else {
           SavedText(user=request.user, text="clicked.html()").save();
-        }
+
         $(messages[clickedIndex]).removeClass("active");
 
-      });
     </script>
   </body>
 </html>

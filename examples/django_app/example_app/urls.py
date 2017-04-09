@@ -9,10 +9,10 @@ from saved_posts import urls as saved_posts_urls
 urlpatterns = [
     url(r'^$', ChatterBotAppView.as_view(), name='main'),
     url(r'^register/', views.UserFormView.as_view(), name='register'),
-    url(r'^login/$', auth.views.login, {"template_name": "templates/login.html"}, name='login'),
-    url(r'^logout/', auth.views.logout, name='logout'),
+    #url(r'^login/', views.UserLoginView.as_view(), name='login'),
+    url(r'^login/$', auth.views.login, {"template_name": "login.html"}, name='login'),
+    url(r'^logout/', auth.views.logout, {'next_page': '/'}, name='logout'),
     url(r'^admin/', include(admin.site.urls), name='admin'),
     url(r'^api/chatterbot/', include(chatterbot_urls, namespace='chatterbot')),
-    url(r'^saved/', include(saved_posts_urls), name="user"),
-
+    url(r'^notebook/', include(saved_posts_urls), name="notebook"),
 ]

@@ -38,3 +38,31 @@ class UserFormView(View):
                     return redirect('/')
 
         return render(request, self.template_name, {'form':form})
+
+# class UserLoginView(View):
+#     form_class = UserLoginForm
+#     template_name = 'login.html'
+#
+#     def get(self, request):
+#         form = self.form_class(None)
+#         return render(request, self.template_name, {'form': form})
+#
+#     def post(self, request):
+#         form = self.form_class(request.POST)
+#
+#         if form.is_valid():
+#             username = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return redirect('/')
+#                 else:
+#                     print ("not active")
+#             else:
+#                 print ("None")
+#         else:
+#             print ("Form not Valid")
+#
+#         return render(request, self.template_name, {'form':form})
