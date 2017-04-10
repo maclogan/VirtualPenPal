@@ -232,7 +232,12 @@
         $(messages[clickedIndex]).removeClass("active");
       });
 
-          SavedText(user=request.user, text="clicked.html()").save();
+      $("#saveBtn").click(function(){
+        document.cookie = "text=" + clicked.html();
+        window.open('/notebook/create', 'popUpWindow', 'height=600, width=800');
+        $('ul.optionsMenu').hide();
+        $(messages[clickedIndex]).removeClass("active");
+      });
 
         $(messages[clickedIndex]).removeClass("active");
 

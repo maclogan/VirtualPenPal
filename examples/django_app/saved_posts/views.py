@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import SavedText
 from .forms import NotesForm
 
@@ -14,7 +15,7 @@ def SavedText_Create(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
-            return redirect("/notebook/list")
+            return redirect("/notebook/")
     else:
         form = NotesForm()
 
@@ -27,5 +28,8 @@ def SavedText_List(request):
     }
     return render(request, "index.html", context)
 
-def SavedText_Delete(request):
-    return HttpResponse("<h1>Delete</h1>")
+def SavedText_Delete(request, id=None):
+    instance = get_object_or_404(SavedText, id=id)
+    instance.delete()
+    messages.success(request, "Successfully Deleted")
+    return redirect('/notebook')
