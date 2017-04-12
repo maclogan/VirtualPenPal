@@ -24,13 +24,16 @@ def SavedText_Create(request):
 
 def SavedText_List(request):
     order_by = request.GET.get('order_by', 'created_at')
-    sort_type = request.GET.get('sort_type', 'asc')
+    sort_type = request.GET.get('sort', 'asc')
+    print(sort_type)
     if(sort_type == "desc"):
         print('desc')
         queryset = SavedText.objects.all().order_by("-"+order_by)
+        sort_type = "asc"
     elif(sort_type == "asc"):
         print('else')
         queryset = SavedText.objects.all().order_by(order_by);
+        sort_type = 'desc'
     #queryset = SavedText.objects.all()
     context = {
         "sort_type": sort_type,

@@ -39,6 +39,10 @@ class UserFormView(View):
 
         return render(request, self.template_name, {'form':form})
 
+class AboutView(View):
+    template_name = "about.html"
+    def get(self, request):
+        return render(request, self.template_name)
 # class UserLoginView(View):
 #     form_class = UserLoginForm
 #     template_name = 'login.html'

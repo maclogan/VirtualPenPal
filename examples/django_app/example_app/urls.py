@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name='admin'),
     url(r'^api/chatterbot/', include(chatterbot_urls, namespace='chatterbot')),
     url(r'^notebook/', include(saved_posts_urls), name="notebook"),
+    url(r'^about/$', views.AboutView.as_view(), name="about"),
 ]
