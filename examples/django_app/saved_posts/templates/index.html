@@ -1,5 +1,4 @@
 {% load staticfiles %}
-<html>
 <head>
   <title>Saved Texts</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
@@ -8,15 +7,28 @@
 <head>
 
 <body>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/js.cookie.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+
 {% include "nav.html" %}
+
+  {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+  {% endfor %}
 
   <h1 class="col-md-12 text-center">Saved Texts</h1>
   <div class="container">
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Time Created</th>
-        <th>User</th>
+        <th><a href="?order_by=created_at&sort={{ sort_type }}">Time Created</a></th>
+        <th><a href="?order_by=lang&sort={{ sort_type }}">Language</a></th>
         <th>Text</th>
         <th> </th>
       </tr>
@@ -25,12 +37,17 @@
       {% for obj in objectList %}
       <tr>
         <td>{{ obj.created_at }}</td>
+        <td>
+          {% if obj.lang == "en" %}
+            English
+          {% elif obj.lang == "zh-CN" %}
+            Mandarin
+        {% endif %}
+        </td>
         <td>{{ obj.text }}</td>
-        <td>{{ obj.user }}</td>
         <td><a href = '{{ obj.pk }}/delete'>Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </body>
-</html>

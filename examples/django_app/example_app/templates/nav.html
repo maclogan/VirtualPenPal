@@ -8,7 +8,7 @@
     <li><a href="/about">About</a></li>
     {% if user.is_authenticated %}
     <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.username }}</a>
+      <a class="dropdown-toggle" data-toggle="dropdown" href="">{{ user.username }}</a>
       <ul class="dropdown-menu pull-right">
         <li><a href="/notebook">Notebook</a></li>
         <!--<li><a>Edit User</a></li>-->

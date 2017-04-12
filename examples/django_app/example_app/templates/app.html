@@ -149,31 +149,38 @@
       var messages = document.getElementById("chat").getElementsByTagName("li");
       var text;
       var key = "AIzaSyANRQ_kj-1vxJjNtxhqmhBnw055tg_3heY";
+      var source;
+      var dest;
+      var origText;
 
-
-      function translate(input) {
+      function sourceLang(input) {
         text = input;
 
         var sourceurl = 'https://www.googleapis.com/language/translate/v2/detect?';
-         sourceurl += 'key='+key+'&callback=sourceLang&q='+text;
+         sourceurl += 'key='+key+'&callback=getSourceLang&q='+text;
         var langscript = document.createElement('script');
         langscript.type = 'text/javascript';
         langscript.src = sourceurl;
         document.getElementsByTagName('head')[0].appendChild(langscript);
+        console.log("sourceLang done");
       }
 
-      function sourceLang(response) {
+      function getSourceLang(response) {
         if (response.data) {
-          var source = response.data.detections[0][0].language;
-        }
-        if (source == "en") {
-          var dest = "zh-CN";
-        }else if (source == "zh-CN") {
-          var dest = "en";
-        }else {
-          console.log("Source language could not be detected.")
-        }
+          source = response.data.detections[0][0].language;
 
+          if (source == "en") {
+            dest = "zh-CN";
+          }else if (source == "zh-CN") {
+            dest = "en";
+          }else {
+            console.log("Source language could not be detected.")
+          }
+        }
+        console.log("getSourceLang done");
+      }
+
+      function translate() {
         var url = 'https://www.googleapis.com/language/translate/v2?';
          url += 'key='+key+'&source='+source+'&target='+dest+'&callback=showIt&q='+text;
         var script = document.createElement('script');
@@ -197,6 +204,8 @@
         //alert("Clicked" + $(this).html());
         clicked = $(this);
         clickedIndex = $(this).index();
+        origText = clicked.html().split('<br>');
+        sourceLang(origText[0]);
 
         event.preventDefault();
            $("ul.optionsMenu")
@@ -223,7 +232,7 @@
       $('#translateBtn').click(function() {
         if(translated[clickedIndex] !== true){
           translated[clickedIndex] = true;
-          translate(clicked.html());
+          translate();
         }
         else {
           alert("This phrase is already translated.")
@@ -233,7 +242,9 @@
       });
 
       $("#saveBtn").click(function(){
-        document.cookie = "text=" + clicked.html();
+        document.cookie = "text=" + origText[0]
+        document.cookie = "lang=" + source;
+        console.log(document.cookie);
         window.open('/notebook/create', 'popUpWindow', 'height=600, width=800');
         $('ul.optionsMenu').hide();
         $(messages[clickedIndex]).removeClass("active");
